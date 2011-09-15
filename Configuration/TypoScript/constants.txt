@@ -1,0 +1,8 @@
+plugin.tx_vimeoconnector {
+	# cat=VimeoConnector/storage; type=int; label=PID:to store the imported data at
+	storagePID =
+	# cat=VimeoConnector/storage; type=string; label=Key:Vimeo Consumer Key
+	customerKey =
+	# cat=VimeoConnector/storage; type=string; label=Secret:Vimeo Consumer Secret
+	customerSecret =
+}

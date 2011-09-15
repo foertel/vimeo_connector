@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Strings for the Vimeo Connector</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="domain.model.video">Video</label>
+			<label index="domain.model.video.title">Title</label>
+			<label index="domain.model.video.identifier">Identifier</label>
+			<label index="domain.model.video.description">Description</label>
+			<label index="domain.model.video.categories">Categories</label>
+
+			<label index="domain.model.category">Category</label>
+			<label index="domain.model.category.title">Title</label>
+			<label index="domain.model.category.description">Description</label>
+			<label index="domain.model.category.videos">Videos</label>
+
+			<label index="tca.fields.hidden">Deactivate</label>
+
+			<label index="flexform.sheet.root">General</label>
+
+			<label index="message.noVideo">No video available.</label>
+		</languageKey>
+	</data>
+</T3locallang>
