@@ -1,6 +1,10 @@
 plugin.tx_vimeoconnector {
 	persistence {
 		storagePid = {$plugin.tx_vimeoconnector.storagePID}
+		classes.Tx_VimeoConnector_Domain_Model_Video.mapping.columns {
+			tstamp.mapOnProperty = imported
+			crdate.mapOnProperty = uploaded
+		}
 	}
 	settings {
 		consumerKey = {$plugin.tx_vimeoconnector.consumerKey}

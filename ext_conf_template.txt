@@ -1,0 +1,10 @@
+# cat=basic/misc/010; type=string; label=API:URL of vimeo API
+api = http://vimeo.com/api/rest/v2
+# cat=basic/misc/010; type=string; label=Consumer Key:from your registered app at http://vimeo.com/api/applications
+consumerKey =
+# cat=basic/misc/010; type=string; label=Consumer Secret:from your registered app at http://vimeo.com/api/applications
+consumerSecret =
+# cat=basic/misc/010; type=string; label=User Account
+userAccount = 
+# cat=basic/misc/010; type=int; label=PID:to store the imported data at
+storagePid =

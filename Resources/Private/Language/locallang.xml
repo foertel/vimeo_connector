@@ -11,6 +11,11 @@
 			<label index="domain.model.video.identifier">Identifier</label>
 			<label index="domain.model.video.description">Description</label>
 			<label index="domain.model.video.categories">Categories</label>
+			<label index="domain.model.video.duration">Duration</label>
+			<label index="domain.model.video.datetaken">Date of recording</label>
+			<label index="domain.model.video.thumbnail">Thumbnail</label>
+			<label index="domain.model.video.uploaded">Uploaded to Vimeo</label>
+			<label index="domain.model.video.imported">Imported to TYPO3</label>
 
 			<label index="domain.model.category">Category</label>
 			<label index="domain.model.category.title">Title</label>
@@ -22,6 +27,9 @@
 			<label index="flexform.sheet.root">General</label>
 
 			<label index="message.noVideo">No video available.</label>
+
+			<label index="scheduler.import.title">Vimeo Connector Import</label>
+			<label index="scheduler.import.description">Imports video metadata from Vimeo.</label>
 		</languageKey>
 	</data>
 </T3locallang>

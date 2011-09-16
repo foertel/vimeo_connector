@@ -45,9 +45,34 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	protected $identifier;
 
 	/**
+	 * @var int
+	 */
+	protected $duration;
+
+	/**
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Category>
 	 */
 	protected $categories;
+
+	/**
+	 * @var DateTime
+	 */
+	protected $dateTaken;
+
+	/**
+	 * @var string
+	 */
+	protected $thumbnail;
+
+	/**
+	 * @var DateTime
+	 */
+	protected $imported;
+
+	/**
+	 * @var DateTime
+	 */
+	protected $uploaded;
 
 	/**
 	 * @param string $title
@@ -98,6 +123,22 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	}
 
 	/**
+	 * @param int $duration
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setDuration($duration) {
+		$this->duration = $duration;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDuration() {
+		return $this->duration;
+	}
+
+	/**
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Category> $categories
 	 * @return Tx_VimeoConnector_Domain_Model_Video this
 	 */
@@ -111,6 +152,70 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	 */
 	public function getCategories() {
 		return $this->categories;
+	}
+
+	/**
+	 * @param DateTime $dateTaken
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setDateTaken($dateTaken) {
+		$this->dateTaken = $dateTaken;
+		return $this;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getDateTaken() {
+		return $this->dateTaken;
+	}
+
+	/**
+	 * @param string $thumbnail
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setThumbnail($thumbnail) {
+		$this->thumbnail = $thumbnail;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getThumbnail() {
+		return $this->thumbnail;
+	}
+
+	/**
+	 * @param DateTime $imported
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setImported($imported) {
+		$this->imported = $imported;
+		return $this;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getImported() {
+		return $this->imported;
+	}
+
+	/**
+	 * @param DateTime $uploaded
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setUploaded($uploaded) {
+		$this->uploaded = $uploaded;
+		return $this;
+	}
+
+	/**
+	 * @return DateTime
+	 */
+	public function getUploaded() {
+		return $this->uploaded;
 	}
 }
 ?>

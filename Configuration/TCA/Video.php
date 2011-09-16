@@ -16,6 +16,7 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 			'config'  => array(
 				'type' => 'input',
 				'eval' => 'required',
+				'readOnly' => TRUE
 			)
 		),
 		'description' => array(
@@ -24,7 +25,8 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 			'config'  => array(
 				'type' => 'text',
 				'rows' => 20,
-				'cols' => 80
+				'cols' => 80,
+				'readOnly' => TRUE
 			)
 		),
 		'identifier' => array(
@@ -33,6 +35,60 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 			'config'  => array(
 				'type' => 'input',
 				'eval' => 'int',
+				'readOnly' => TRUE
+			)
+		),
+		'duration' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.duration',
+			'config'  => array(
+				'type' => 'input',
+				'eval' => 'int',
+				'readOnly' => TRUE
+			)
+		),
+		'date_taken' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.datetaken',
+			'config'  => array(
+				'type' => 'input',
+				'eval' => 'date',
+				'size' => 4
+			)
+		),
+		'tstamp' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.imported',
+			'config'  => array(
+				'type' => 'input',
+				'eval' => 'date',
+				'size' => 8,
+				'readOnly' => TRUE
+			)
+		),
+		'crdate' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.uploaded',
+			'config'  => array(
+				'type' => 'input',
+				'eval' => 'date',
+				'size' => 8,
+				'readOnly' => TRUE
+			)
+		),
+		'thumbnail' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.thumbnail',
+			'config'  => array(
+				'type' => 'group',
+				'internal_type' => 'file',
+				'allowed' => 'gif,png,jpeg,jpg',
+				'uploadfolder' => 'uploads/tx_vimeoconnector',
+				'show_thumbs' => TRUE,
+				'size' => 1,
+				'maxitems' => 1,
+				'readOnly' => TRUE,
+				'disable_controls' => 'list,browser,upload'
 			)
 		),
 		'categories' => array(
@@ -80,7 +136,7 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 		),
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, title, description, categories, identifier')
+		'1' => array('showitem' => 'hidden, title, description, duration, categories, date_taken, crdate, tstamp, thumbnail, identifier')
 	)
 );
 ?>

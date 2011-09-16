@@ -5,6 +5,9 @@ CREATE TABLE tx_vimeoconnector_domain_model_video (
 	title text NOT NULL,
 	description text NOT NULL,
 	identifier int(10) DEFAULT '0' NOT NULL,
+	duration int(11) DEFAULT '0' NOT NULL,
+	date_taken int(11) DEFAULT '0' NOT NULL,
+	thumbnail varchar(255) DEFAULT '' NOT NULL,
 
 	categories int(11) DEFAULT '0' NOT NULL,
 
