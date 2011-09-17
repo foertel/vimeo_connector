@@ -27,6 +27,32 @@ $TCA['tx_vimeoconnector_domain_model_category'] = array(
 				'cols' => 80
 			)
 		),
+		'parent' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.parent',
+			'config'  => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_vimeoconnector_domain_model_category',
+				'size' => 1,
+				'maxitems' => 1,
+				'foreign_table_where' => ' AND tx_vimeoconnector_domain_model_category.parent <= 0'
+					. ' AND tx_vimeoconnector_domain_model_category.uid != ###THIS_UID### ',
+				'items' => array(array('-')),
+				'noIconsBelowSelect' => TRUE
+			)
+		),
+		'children' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.children',
+			'config'  => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_vimeoconnector_domain_model_category',
+				'foreign_field' => 'parent',
+				'size' => 10,
+				'maxitems' => 9999,
+				'readOnly' => TRUE
+			)
+		),
 		'videos' => array(
 			'exclude' => 0,
 			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.videos',
@@ -74,7 +100,7 @@ $TCA['tx_vimeoconnector_domain_model_category'] = array(
 		),
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, title, description, videos')
+		'1' => array('showitem' => 'hidden, title, description, parent, children, videos')
 	)
 );
 ?>

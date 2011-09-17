@@ -20,6 +20,8 @@
 			<label index="domain.model.category">Category</label>
 			<label index="domain.model.category.title">Title</label>
 			<label index="domain.model.category.description">Description</label>
+			<label index="domain.model.category.parent">Parent Category</label>
+			<label index="domain.model.category.children">Child Categories</label>
 			<label index="domain.model.category.videos">Videos</label>
 
 			<label index="tca.fields.hidden">Deactivate</label>

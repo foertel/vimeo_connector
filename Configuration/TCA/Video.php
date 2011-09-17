@@ -99,7 +99,7 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 				'foreign_table' => 'tx_vimeoconnector_domain_model_category',
 				'MM' => 'tx_vimeoconnector_mm_video_category',
 				'size' => 10,
-				'maxitems' => 99999,
+				'maxitems' => 99999
 			)
 		),
 		'sys_language_uid'=> array(

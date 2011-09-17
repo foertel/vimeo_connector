@@ -27,5 +27,27 @@
  * @subpackage Repository
  */
 class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Persistence_Repository {
+	
+	/**
+	 * @param array<int> $categories
+	 * @return array
+	 */
+	public function findForTeaserBox($categories) {
+		$return = $this
+			->createQuery()
+			->statement(
+				'SELECT video.*'
+					. ' FROM tx_vimeoconnector_mm_video_category mm'
+						. ' LEFT JOIN tx_vimeoconnector_domain_model_video video'
+							. ' ON mm.uid_local = video.uid'
+					. ' WHERE mm.uid_foreign IN (' . implode(',', t3lib_div::intExplode(',', $categories)) . ')'
+					. ' GROUP BY mm.uid_foreign'
+					. ' ORDER BY video.date_taken DESC'
+			)
+			->execute();
+		foreach ($return as $video) {
+			var_dump($video);
+		}
+	}
 }
 ?>
