@@ -1,0 +1,7 @@
+<h3>{category.title}</h3>
+
+<ul>
+	<f:for each="{category.children}" as="child">
+		<li><f:link.action action="show" arguments="{category: child}">{child.title}</f:link.action></li>
+	</f:for>
+</ul>

@@ -27,5 +27,21 @@
  * @subpackage Repository
  */
 class Tx_VimeoConnector_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
+
+	/**
+	 * @return array
+	 */
+	public function findForList() {
+		$query = $this->createQuery();
+
+		$query->matching(
+			$query->logicalAnd(
+				$query->equals('parent', 0),
+				$query->greaterThan('children', 0)
+			)
+		);
+
+		return $query->execute();
+	}
 }
 ?>

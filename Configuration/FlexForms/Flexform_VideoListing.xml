@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:flexform.sheet.root</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.category>
+						<TCEforms>
+							<label>LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category</label>
+							<config>
+								<type>select</type>
+								<foreign_table>tx_vimeoconnector_domain_model_category</foreign_table>
+								<foreign_table_where> AND videos > 0 ORDER BY title</foreign_table_where>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">-</numIndex>
+									</numIndex>
+								</items>
+								<noIconsBelowSelect>TRUE</noIconsBelowSelect>
+							</config>
+						</TCEforms>
+					</settings.category>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

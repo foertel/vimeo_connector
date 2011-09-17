@@ -27,7 +27,7 @@
  * @package vimeo_connector
  * @subpackage Controller
  */
-class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_VimeoConnector_Controller_CategoryController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
 	 * @var Tx_VimeoConnector_Domain_Repository_CategoryRepository
@@ -35,9 +35,9 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	protected $categoryRepository;
 
 	/**
-	 * @var Tx_VimeoConnector_Domain_Repository_VideoRepository
+	 * @var Tx_VimeoConnector_Domain_Repository_YearRepository $partialHelper
 	 */
-	protected $videoRepository;
+	protected $yearRepository;
 
 	/**
 	 * @param Tx_VimeoConnector_Domain_Repository_CategoryRepository $categoryRepository
@@ -47,10 +47,18 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	}
 
 	/**
-	 * @param Tx_VimeoConnector_Domain_Repository_VideoRepository $videoRepository
+	 * @param Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository
 	 */
-	public function injectVideoRepository(Tx_VimeoConnector_Domain_Repository_VideoRepository $videoRepository) {
-		$this->videoRepository = $videoRepository;
+	public function injectYearRepository(Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository) {
+		$this->yearRepository = $yearRepository;
+	}
+	
+	/**
+	 * @return void
+	 */
+	public function indexAllAction() {
+		$this->view->assign('categories', $this->categoryRepository->findForList());
+		$this->view->assign('years', $this->yearRepository->findAll());
 	}
 
 	/**
@@ -70,19 +78,11 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	}
 
 	/**
-	 * @param Tx_VimeoConnector_Domain_Model_Video $video
+	 * @param Tx_VimeoConnector_Domain_Model_Category $category
 	 * @return void
 	 */
-	public function showAction(Tx_VimeoConnector_Domain_Model_Video $video) {
-		$this->view->assign('video', $video);
-	}
-
-	/**
-	 * @return void
-	 */
-	public function teaserBoxAction() {
-		$this->view->assign('tabs', $this->videoRepository->findForTeaserBox($this->settings['categories']));
-		die();
+	public function showAction(Tx_VimeoConnector_Domain_Model_Category $category) {
+		$this->view->assign('category', $category);
 	}
 }
 ?>

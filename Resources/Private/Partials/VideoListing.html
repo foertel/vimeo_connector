@@ -4,7 +4,7 @@
 		<div class="cl">
 			<div class="vimeo-thumb">
 				<f:if condition="{video.thumbnail}">
-					<f:link.action action="show" arguments="{video: video}">
+					<f:link.action controller="Video" action="show" arguments="{video: video}">
 						<div class="vimeo-playbutton">
 						<f:image src="{settings.storageFolder}/{video.thumbnail}" width="152c" height="115c" alt="{video.title} thumbnail" />
 						</div>
