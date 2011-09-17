@@ -8,3 +8,5 @@ plugin.tx_vimeoconnector {
 	# cat=VimeoConnector/storage; type=string; label=Upload:Folder where imported thumbnail are
 	storageFolder = uploads/tx_vimeoconnector
 }
+# cat=VimeoConnector/storage; type=int; label=Single View:default single view (for solr)
+const.page.video.single = 
