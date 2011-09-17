@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Importing your videos from Vimeo',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '0.0.1-devel',
+	'version' => '0.0.2-devel',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 		'depends' => array(
 			'php' => '5.3.0-0.0.0',
 			'typo3' => '4.5.0-4.5.99',
-			'extbase' => '1.4.0-devel-0.0.0'
+			'extbase' => '1.3.0-devel-1.4.0'
 		),
 		'conflicts' => array(
 		),
