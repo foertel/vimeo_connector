@@ -143,6 +143,7 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 					'pid' => intval($this->storagePid),
 					'tstamp' => time(),
 					'crdate' => strtotime($video->upload_date),
+					'date_taken' => strtotime($video->upload_date),
 					'title' => $video->title,
 					'description' => $video->description,
 					'thumbnail' => $thumbnailFileName,

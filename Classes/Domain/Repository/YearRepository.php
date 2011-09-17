@@ -33,9 +33,9 @@ class Tx_VimeoConnector_Domain_Repository_YearRepository {
 	 */
 	public function findAll() {
 		$sqlResult = $GLOBALS['TYPO3_DB']->sql_query(
-			'SELECT FROM_UNIXTIME(crdate, \'%Y\') as year, FROM_UNIXTIME(crdate, \'%c\') as month, COUNT(*) as count'
+			'SELECT FROM_UNIXTIME(date_taken, \'%Y\') as year, FROM_UNIXTIME(date_taken, \'%c\') as month, COUNT(*) as count'
 			. ' FROM tx_vimeoconnector_domain_model_video'
-			. ' GROUP BY YEAR(FROM_UNIXTIME(crdate, \'%Y-%m-%d\')), MONTH(FROM_UNIXTIME(crdate, \'%Y-%m-%d\'))'
+			. ' GROUP BY YEAR(FROM_UNIXTIME(date_taken, \'%Y-%m-%d\')), MONTH(FROM_UNIXTIME(date_taken, \'%Y-%m-%d\'))'
 			. ' ORDER BY year DESC, month'
 		);
 
