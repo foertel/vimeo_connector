@@ -28,6 +28,8 @@
 
 			<label index="message.noVideo">No video available.</label>
 
+			<label index="title.archive">Video Archive</label>
+
 			<label index="scheduler.import.title">Vimeo Connector Import</label>
 			<label index="scheduler.import.description">Imports video metadata from Vimeo.</label>
 			

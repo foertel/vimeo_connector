@@ -1,3 +1,12 @@
-<f:render partial="VideoListing" arguments="{videos: category.videos}" />
+<div id="vimeo">
+	<h1>{category.title}</h1>
 
-<f:render partial="ArchiveListing" arguments="{years: years}" />
+	<f:if condition="{category.videos}">
+		<f:then><f:render partial="VideoListing" arguments="{videos: category.videos}" /></f:then>
+		<f:else><p><f:translate key="message.noVideo" /></p></f:else>
+	</f:if>
+</div>
+
+<f:if condition="{years}">
+	<f:render partial="ArchiveListing" arguments="{years: years}" />
+</f:if>
