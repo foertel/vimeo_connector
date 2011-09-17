@@ -30,6 +30,19 @@
 
 			<label index="scheduler.import.title">Vimeo Connector Import</label>
 			<label index="scheduler.import.description">Imports video metadata from Vimeo.</label>
+			
+			<label index="month.1">January</label>
+			<label index="month.2">February</label>
+			<label index="month.3">March</label>
+			<label index="month.4">April</label>
+			<label index="month.5">May</label>
+			<label index="month.6">June</label>
+			<label index="month.7">July</label>
+			<label index="month.8">August</label>
+			<label index="month.9">September</label>
+			<label index="month.10">October</label>
+			<label index="month.11">November</label>
+			<label index="month.12">December</label>
 		</languageKey>
 	</data>
 </T3locallang>

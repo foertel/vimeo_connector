@@ -1,0 +1,26 @@
+<f:if condition="{videos}">
+<div id="vimeo">
+    <ul class="vimeo-listing">
+
+		<f:for each="{videos}" as="video">
+			<li class="vimeo-listitem">
+			<div class="cl">
+				<div class="vimeo-thumb">thumb: {video.thumbnail}</div>
+					<div class="vimeo-content">
+						<div class="vimeo-header cl b-news-head">
+							<div class="vimeo-title"><h2>{video.title}</h2></div>
+							<div class="vimeo-posted-by b-news-facts"><span>by</span> <a href="#">TYPO3.org</a> </div>
+							<div class="vimeo-posted-on">
+								<span class="b-news-head-date"><f:format.date format="l d, Y">{video.date_taken}</f:format.date></span>
+							</div>
+						</div>
+						<div class="vimeo-description"><p class="bodytext">{video.description}</p>
+							<p><f:link.action action="show" arguments="{video: video}">Ansehen</f:link.action></p></div>
+					</div>
+				</div>
+			</li>
+		</f:for>
+
+    </ul>
+</div>
+</f:if>

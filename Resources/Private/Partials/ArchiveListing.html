@@ -1,0 +1,24 @@
+<f:if condition="{years}">
+<div id="vimeo-archive" class="s-sidebar">
+	<div style="margin-top:19px;" class="csc-default" id="c1398">
+		<section>
+			<div class="accordion">
+				<f:for each="{years}" as="months" key="year" iteration="iteration">
+					<h5 class="a-h <f:if condition="{iteration.isFirst}">open</f:if>"><span>{year}</span></h5>
+					<div class="a-body">
+						<div class="a-content">
+							<ul class="b-archive-nav">
+								<f:for each="{months}" as="count" key="month">
+									<li>
+										<f:link.action action="indexByMonth" arguments="{month: month}"><span><f:translate key="month.{month}" /></span></f:link.action> ({count})
+									</li>
+								</f:for>
+							</ul>
+						</div>
+					</div>
+				</f:for>
+			</div>
+		</section>
+	</div>
+</div>
+</f:if>

@@ -1,5 +1,13 @@
-<h3>{video.title}</h3>
-
-<div>{video.description}</div>
-
-<f:render partial="VimeoPlayer" arguments="{video: video}" />
+<div id="vimeo-single">
+	<div class="vimeo-single-player">
+		<div class="b-news-head">
+			<h1>{video.title}</h1>
+			<p class="b-news-head-date">
+				<f:format.date format="d.m.Y">{video.dateTaken}</f:format.date> at <f:format.date format="H:i">{video.dateTaken}</f:format.date>
+			</p>
+			<p>by: <a href="#">TYPO3.org</a> <br></p>
+		</div>
+		<div class="vimeo-player"><f:render partial="VimeoPlayer" arguments="{video: video}" /></div>
+		<div class="vimeo-description"><p class="bodytext">{video.description}</p></div>
+	</div>
+</div>

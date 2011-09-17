@@ -35,10 +35,22 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	protected $categoryRepository;
 
 	/**
+	 * @var Tx_VimeoConnector_Domain_Repository_YearRepository $partialHelper
+	 */
+	protected $yearRepository;
+
+	/**
 	 * @param Tx_VimeoConnector_Domain_Repository_CategoryRepository $categoryRepository
 	 */
 	public function injectCategoryRepository(Tx_VimeoConnector_Domain_Repository_CategoryRepository $categoryRepository) {
 		$this->categoryRepository = $categoryRepository;
+	}
+
+	/**
+	 * @param Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository
+	 */
+	public function injectYearRepository(Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository) {
+		$this->yearRepository = $yearRepository;
 	}
 
 	/**
@@ -50,6 +62,7 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 		}
 
 		$this->view->assign('category', $this->categoryRepository->findByUid(intval($this->settings['category'])));
+		$this->view->assign('years', $this->yearRepository->findAll());
 	}
 
 	/**

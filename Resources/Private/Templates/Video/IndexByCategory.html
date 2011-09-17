@@ -1,16 +1,3 @@
-<h3>{category.title}</h3>
+<f:render partial="VideoListing" arguments="{videos: category.videos}" />
 
-<div>{category.description}</div>
-
-<f:if condition="{category.videos}">
-	<f:then>
-		<ul>
-			<f:for each="{category.videos}" as="video">
-				<li><f:link.action action="show" arguments="{video: video}">{video.title}</f:link.action></li>
-			</f:for>
-		</ul>
-	</f:then>
-	<f:else>
-		<div><f:translate key="message.noVideo" /></div>
-	</f:else>
-</f:if>
+<f:render partial="ArchiveListing" arguments="{years: years}" />
