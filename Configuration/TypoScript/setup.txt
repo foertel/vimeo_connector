@@ -9,5 +9,6 @@ plugin.tx_vimeoconnector {
 	settings {
 		consumerKey = {$plugin.tx_vimeoconnector.consumerKey}
 		consumerSecret = {$plugin.tx_vimeoconnector.consumerSecret}
+		storageFolder = {$plugin.tx_vimeoconnector.storageFolder}
 	}
 }

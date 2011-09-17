@@ -5,4 +5,6 @@ plugin.tx_vimeoconnector {
 	customerKey =
 	# cat=VimeoConnector/storage; type=string; label=Secret:Vimeo Consumer Secret
 	customerSecret =
+	# cat=VimeoConnector/storage; type=string; label=Upload:Folder where imported thumbnail are
+	storageFolder = uploads/tx_vimeoconnector
 }
