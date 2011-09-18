@@ -11,6 +11,7 @@
 			<label index="domain.model.video.identifier">Identifier</label>
 			<label index="domain.model.video.description">Description</label>
 			<label index="domain.model.video.categories">Categories</label>
+			<label index="domain.model.video.type">Type</label>
 			<label index="domain.model.video.duration">Duration</label>
 			<label index="domain.model.video.datetaken">Date of recording</label>
 			<label index="domain.model.video.thumbnail">Thumbnail</label>
@@ -20,13 +21,16 @@
 			<label index="domain.model.category">Category</label>
 			<label index="domain.model.category.title">Title</label>
 			<label index="domain.model.category.description">Description</label>
-			<label index="domain.model.category.parent">Parent Category</label>
-			<label index="domain.model.category.children">Child Categories</label>
 			<label index="domain.model.category.videos">Videos</label>
+
+			<label index="domain.model.type">Type</label>
+			<label index="domain.model.type.title">Title</label>
+			<label index="domain.model.type.videos">Videos</label>
 
 			<label index="tca.fields.hidden">Deactivate</label>
 
 			<label index="flexform.sheet.root">General</label>
+			<label index="flexform.field.showAll">include "All Videos"</label>
 
 			<label index="message.noVideo">No video available.</label>
 
@@ -34,7 +38,7 @@
 
 			<label index="scheduler.import.title">Vimeo Connector Import</label>
 			<label index="scheduler.import.description">Imports video metadata from Vimeo.</label>
-			
+
 			<label index="month.1">January</label>
 			<label index="month.2">February</label>
 			<label index="month.3">March</label>
