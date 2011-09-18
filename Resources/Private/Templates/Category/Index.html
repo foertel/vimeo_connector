@@ -1,7 +1,12 @@
-<h3>{category.title}</h3>
+<div class="arrow-list col2">
+	<ul>
+		<f:for each="{categories}" as="category">
+			<li>
+				<f:link.action controller="Category" action="show" arguments="{category: category}">{category.title}</f:link.action>
+			</li>
+		</f:for>
+		<div class="cl"> </div>
+	</ul>
+</div>
 
-<ul>
-	<f:for each="{category.children}" as="child">
-		<li><f:link.action action="show" arguments="{category: child}">{child.title}</f:link.action></li>
-	</f:for>
-</ul>
+<f:render partial="ArchiveListing" arguments="{years: years}" />

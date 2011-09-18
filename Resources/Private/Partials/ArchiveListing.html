@@ -10,7 +10,7 @@
 							<ul class="b-archive-nav">
 								<f:for each="{months}" as="count" key="month">
 									<li>
-										<f:link.action action="indexByMonth" arguments="{month: month}"><span><f:translate key="month.{month}" /></span></f:link.action> ({count})
+										<f:link.action controller="Video" action="archive" arguments="{year: year, month: month}"><span><f:translate key="month.{month}" /></span></f:link.action> ({count})
 									</li>
 								</f:for>
 							</ul>
