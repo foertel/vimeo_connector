@@ -4,9 +4,15 @@
 		<f:for each="{videos}" as="video">
 			<li class="vimeo-related">
 				<div>
-					<div class="vimeo-related-thumb">thumb: {video.thumbnail}</div>
+					<div class="vimeo-related-thumb">
+						<f:link.action controller="Video" action="show" arguments="{video: video}">
+							<div class="vimeo-playbutton">
+							<f:image src="{settings.storageFolder}/{video.thumbnail}" width="136c" height="100c" alt="{video.title} thumbnail" />
+							</div>
+						</f:link.action>
+					</div>
 					<div class="vimeo-related-title">
-						<span><f:link.action action="show" arguments="{video: video}">{video.title}</f:link.action><span>
+						<span><f:link.action controller="Video" action="show" arguments="{video: video}">{video.title}</f:link.action><span>
 					</div>
 				</div>
 			</li>

@@ -114,6 +114,17 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 				'items' => array(array('-'))
 			)
 		),
+		'related' => array(
+			'exclude' => 0,
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.video.related',
+			'config'  => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_vimeoconnector_domain_model_video',
+				'MM' => 'tx_vimeoconnector_mm_video_video',
+				'size' => 10,
+				'maxitems' => 99999
+			)
+		),
 		'sys_language_uid'=> array(
 			'exclude'=>1,
 			'label' =>'LLL:EXT:lang/locallang_general.xml:LGL.language',
@@ -148,7 +159,7 @@ $TCA['tx_vimeoconnector_domain_model_video'] = array(
 		),
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, title, description, duration, categories, type, date_taken, crdate, tstamp, thumbnail, identifier')
+		'1' => array('showitem' => 'hidden, title, description, duration, categories, related, type, date_taken, crdate, tstamp, thumbnail, identifier')
 	)
 );
 ?>

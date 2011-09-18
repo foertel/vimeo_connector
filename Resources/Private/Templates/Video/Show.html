@@ -3,11 +3,13 @@
 		<div class="b-news-head">
 			<h1>{video.title}</h1>
 			<p class="b-news-head-date">
-				<f:format.date format="d.m.Y">{video.dateTaken}</f:format.date> at <f:format.date format="H:i">{video.dateTaken}</f:format.date>
+				at <f:format.date format="l d, Y">{video.dateTaken}</f:format.date>
 			</p>
-			<p>by: <a href="#">TYPO3.org</a> <br></p>
+			<p><br /></p>
 		</div>
 		<div class="vimeo-player"><f:render partial="VimeoPlayer" arguments="{video: video}" /></div>
 		<div class="vimeo-description"><p class="bodytext">{video.description}</p></div>
 	</div>
 </div>
+
+<f:render partial="RelatedListing" arguments="{videos: video.related}" />

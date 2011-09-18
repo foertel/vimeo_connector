@@ -11,6 +11,7 @@
 			<label index="domain.model.video.identifier">Identifier</label>
 			<label index="domain.model.video.description">Description</label>
 			<label index="domain.model.video.categories">Categories</label>
+			<label index="domain.model.video.related">Related Videos</label>
 			<label index="domain.model.video.type">Type</label>
 			<label index="domain.model.video.duration">Duration</label>
 			<label index="domain.model.video.datetaken">Date of recording</label>

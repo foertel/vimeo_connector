@@ -55,6 +55,11 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	protected $categories;
 
 	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video>
+	 */
+	protected $related;
+
+	/**
 	 * @var DateTime
 	 */
 	protected $dateTaken;
@@ -73,7 +78,7 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	 * @var DateTime
 	 */
 	protected $uploaded;
-	
+
 	/**
 	 * @var Tx_VimeoConnector_Domain_Model_Type
 	 */
@@ -160,6 +165,22 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	}
 
 	/**
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video> $related
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setRelated(Tx_Extbase_Persistence_ObjectStorage $related) {
+		$this->related = $related;
+		return $this;
+	}
+
+	/**
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video>
+	 */
+	public function getRelated() {
+		return $this->related;
+	}
+
+	/**
 	 * @param DateTime $dateTaken
 	 * @return Tx_VimeoConnector_Domain_Model_Video this
 	 */
@@ -222,7 +243,7 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	public function getUploaded() {
 		return $this->uploaded;
 	}
-	
+
 	/**
 	 * @param Tx_VimeoConnector_Domain_Model_Type $type
 	 * @return Tx_VimeoConnector_Domain_Model_Video this
