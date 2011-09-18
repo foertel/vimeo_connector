@@ -5,26 +5,32 @@ if (!defined('TYPO3_MODE')) {
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'CategoryListing',
+	'AllCategories',
 	array(
-		'Category' => 'index, show',
-		'Video' => 'show'
+		'Category' => 'index'
 	)
 );
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'VideoListing',
+	'Category',
 	array(
-		'Video' => 'index, show'
+		'Category' => 'show'
 	)
 );
 
 Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
-	'AllVideos',
+	'Archive',
 	array(
-		'Category' => 'indexAll, show',
+		'Video' => 'archive'
+	)
+);
+
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Play',
+	array(
 		'Video' => 'show'
 	)
 );
