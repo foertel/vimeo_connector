@@ -11,18 +11,26 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<settings.categories>
+					<settings.showAll>
 						<TCEforms>
-							<label>LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category</label>
+							<label>LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:flexform.field.showAll</label>
 							<config>
-								<type>select</type>
-								<foreign_table>tx_vimeoconnector_domain_model_category</foreign_table>
-								<foreign_table_where> AND videos > 0 ORDER BY title</foreign_table_where>
-								<size>4</size>
-								<maxitems>3</maxitems>
+								<type>check</type>
 							</config>
 						</TCEforms>
-					</settings.categories>
+					</settings.showAll>
+					<settings.types>
+						<TCEforms>
+							<label>LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.type</label>
+							<config>
+								<type>select</type>
+								<foreign_table>tx_vimeoconnector_domain_model_type</foreign_table>
+								<foreign_table_where> ORDER BY title</foreign_table_where>
+								<size>4</size>
+								<maxitems>99999</maxitems>
+							</config>
+						</TCEforms>
+					</settings.types>
 				</el>
 			</ROOT>
 		</sDEF>
