@@ -30,21 +30,14 @@
 class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Controller_ActionController {
 
 	/**
-	 * @var Tx_VimeoConnector_Domain_Repository_CategoryRepository
-	 */
-	protected $categoryRepository;
-
-	/**
 	 * @var Tx_VimeoConnector_Domain_Repository_VideoRepository
 	 */
 	protected $videoRepository;
 
 	/**
-	 * @param Tx_VimeoConnector_Domain_Repository_CategoryRepository $categoryRepository
+	 * @var Tx_VimeoConnector_Domain_Repository_YearRepository $partialHelper
 	 */
-	public function injectCategoryRepository(Tx_VimeoConnector_Domain_Repository_CategoryRepository $categoryRepository) {
-		$this->categoryRepository = $categoryRepository;
-	}
+	protected $yearRepository;
 
 	/**
 	 * @param Tx_VimeoConnector_Domain_Repository_VideoRepository $videoRepository
@@ -54,19 +47,22 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	}
 
 	/**
-	 * @param Tx_VimeoConnector_Domain_Model_Category $category
+	 * @param Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository
+	 */
+	public function injectYearRepository(Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository) {
+		$this->yearRepository = $yearRepository;
+	}
+
+	/**
+	 * @param int $year
+	 * @param int $month
 	 * @return void
 	 */
-	public function indexAction(Tx_VimeoConnector_Domain_Model_Category $category = NULL) {
-		if (!$category) {
-			if ($this->settings['category'] >= 0) {
-				$category = $this->categoryRepository->findByUid($this->settings['category']);
-			} else {
-				throw new Exception('Category neither given nor configured.', 1316281930);
-			}
-		}
-
-		$this->view->assign('category', $category);
+	public function archiveAction($year, $month) {
+		$this->view->assign('year', $year);
+		$this->view->assign('month', $month);
+		$this->view->assign('videos', $this->videoRepository->findByMonth($year, $month));
+		$this->view->assign('years', $this->yearRepository->findAll());
 	}
 
 	/**
@@ -81,8 +77,7 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	 * @return void
 	 */
 	public function teaserBoxAction() {
-		$this->view->assign('tabs', $this->videoRepository->findForTeaserBox($this->settings['categories']));
-		die();
+		$this->view->assign('videos', $this->videoRepository->findForTeaserBox($this->settings['types'], $this->settings['showAll']));
 	}
 }
 ?>

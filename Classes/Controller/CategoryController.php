@@ -52,29 +52,13 @@ class Tx_VimeoConnector_Controller_CategoryController extends Tx_Extbase_MVC_Con
 	public function injectYearRepository(Tx_VimeoConnector_Domain_Repository_YearRepository $yearRepository) {
 		$this->yearRepository = $yearRepository;
 	}
-	
+
 	/**
 	 * @return void
 	 */
-	public function indexAllAction() {
-		$this->view->assign('categories', $this->categoryRepository->findForList());
+	public function indexAction() {
+		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('years', $this->yearRepository->findAll());
-	}
-
-	/**
-	 * @param Tx_VimeoConnector_Domain_Model_Category $category
-	 * @return void
-	 */
-	public function indexAction(Tx_VimeoConnector_Domain_Model_Category $category = NULL) {
-		if (!$category) {
-			if ($this->settings['category'] >= 0) {
-				$category = $this->categoryRepository->findByUid($this->settings['category']);
-			} else {
-				throw new Exception('Category neither given nor configured.', 1316281930);
-			}
-		}
-
-		$this->view->assign('category', $category);
 	}
 
 	/**
