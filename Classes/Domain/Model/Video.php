@@ -73,6 +73,11 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	 * @var DateTime
 	 */
 	protected $uploaded;
+	
+	/**
+	 * @var Tx_VimeoConnector_Domain_Model_Type
+	 */
+	protected $type;
 
 	/**
 	 * @param string $title
@@ -216,6 +221,22 @@ class Tx_VimeoConnector_Domain_Model_Video extends Tx_Extbase_DomainObject_Abstr
 	 */
 	public function getUploaded() {
 		return $this->uploaded;
+	}
+	
+	/**
+	 * @param Tx_VimeoConnector_Domain_Model_Type $type
+	 * @return Tx_VimeoConnector_Domain_Model_Video this
+	 */
+	public function setType($type) {
+		$this->type = $type;
+		return $this;
+	}
+
+	/**
+	 * @return Tx_VimeoConnector_Domain_Model_Type
+	 */
+	public function getType() {
+		return $this->type;
 	}
 }
 ?>

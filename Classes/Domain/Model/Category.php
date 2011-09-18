@@ -40,19 +40,9 @@ class Tx_VimeoConnector_Domain_Model_Category extends Tx_Extbase_DomainObject_Ab
 	protected $description;
 
 	/**
-	 * @var Tx_VimeoConnector_Domain_Model_Category
-	 */
-	protected $parent;
-
-	/**
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video>
 	 */
 	protected $videos;
-
-	/**
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Category>
-	 */
-	protected $children;
 
 	/**
 	 * @param string $title
@@ -87,22 +77,6 @@ class Tx_VimeoConnector_Domain_Model_Category extends Tx_Extbase_DomainObject_Ab
 	}
 
 	/**
-	 * @param int $identifier
-	 * @return Tx_VimeoConnector_Domain_Model_Category this
-	 */
-	public function setIdentifier($identifier) {
-		$this->identifier = $identifier;
-		return $this;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getIdentifier() {
-		return $this->identifier;
-	}
-
-	/**
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video> $videos
 	 * @return Tx_VimeoConnector_Domain_Model_Category this
 	 */
@@ -116,38 +90,6 @@ class Tx_VimeoConnector_Domain_Model_Category extends Tx_Extbase_DomainObject_Ab
 	 */
 	public function getVideos() {
 		return $this->videos;
-	}
-
-	/**
-	 * @param Tx_VimeoConnector_Domain_Model_Category $parent
-	 * @return Tx_VimeoConnector_Domain_Model_Category this
-	 */
-	public function setParent(Tx_VimeoConnector_Domain_Model_Category $parent) {
-		$this->parent = $parent;
-		return $this;
-	}
-
-	/**
-	 * @return Tx_VimeoConnector_Domain_Model_Category
-	 */
-	public function getParent() {
-		return $this->parent;
-	}
-
-	/**
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Category> $children
-	 * @return Tx_VimeoConnector_Domain_Model_Category this
-	 */
-	public function setChildren(Tx_Extbase_Persistence_ObjectStorage $children) {
-		$this->children = $children;
-		return $this;
-	}
-
-	/**
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Category>
-	 */
-	public function getChildren() {
-		return $this->children;
 	}
 }
 ?>

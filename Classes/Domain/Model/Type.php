@@ -21,11 +21,54 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
 /**
  * @author Felix Oertel <f@oer.tel>
  * @package vimeo_connector
- * @subpackage Repository
+ * @subpackage Model
  */
-class Tx_VimeoConnector_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_VimeoConnector_Domain_Model_Type extends Tx_Extbase_DomainObject_AbstractEntity {
+
+	/**
+	 * @var string
+	 */
+	protected $title;
+
+	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video>
+	 */
+	protected $videos;
+
+	/**
+	 * @param string $title
+	 * @return Tx_VimeoConnector_Domain_Model_Category this
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video> $videos
+	 * @return Tx_VimeoConnector_Domain_Model_Category this
+	 */
+	public function setVideos(Tx_Extbase_Persistence_ObjectStorage $videos) {
+		$this->videos = $videos;
+		return $this;
+	}
+
+	/**
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_VimeoConnector_Domain_Model_Video>
+	 */
+	public function getVideos() {
+		return $this->videos;
+	}
 }
 ?>

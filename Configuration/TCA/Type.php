@@ -1,7 +1,7 @@
 <?php
 
-$TCA['tx_vimeoconnector_domain_model_category'] = array(
-	'ctrl' => $TCA['tx_vimeoconnector_domain_model_category']['ctrl'],
+$TCA['tx_vimeoconnector_domain_model_type'] = array(
+	'ctrl' => $TCA['tx_vimeoconnector_domain_model_type']['ctrl'],
 	'columns' => array(
 		'hidden' => array(
 			'exclude' => 0,
@@ -12,29 +12,19 @@ $TCA['tx_vimeoconnector_domain_model_category'] = array(
 		),
 		'title' => array(
 			'exclude' => 0,
-			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.title',
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.type.title',
 			'config'  => array(
 				'type' => 'input',
 				'eval' => 'required',
 			)
 		),
-		'description' => array(
-			'exclude' => 0,
-			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.description',
-			'config'  => array(
-				'type' => 'text',
-				'rows' => 20,
-				'cols' => 80
-			)
-		),
 		'videos' => array(
 			'exclude' => 0,
-			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.category.videos',
+			'label'   => 'LLL:EXT:vimeo_connector/Resources/Private/Language/locallang.xml:domain.model.typee.videos',
 			'config'  => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_vimeoconnector_domain_model_video',
-				'MM' => 'tx_vimeoconnector_mm_video_category',
-				'MM_opposite_field' => 'categories',
+				'foreign_field' => 'type',
 				'size' => 10,
 				'maxitems' => 99999,
 				'readOnly' => TRUE,
@@ -74,7 +64,7 @@ $TCA['tx_vimeoconnector_domain_model_category'] = array(
 		),
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, title, description, videos')
+		'1' => array('showitem' => 'hidden, title, videos')
 	)
 );
 ?>
