@@ -77,7 +77,11 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	 * @return void
 	 */
 	public function teaserBoxAction() {
-		$this->view->assign('videos', $this->videoRepository->findForTeaserBox($this->settings['types'], $this->settings['showAll']));
+		$this->view->assign('types', $this->videoRepository->findForTeaserBox(
+			$this->settings['types'],
+			$this->settings['showAll'],
+			$this->settings['itemsPerType'] ? $this->settings['itemsPerType'] : 1
+		));
 	}
 }
 ?>
