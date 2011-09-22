@@ -35,7 +35,7 @@ class Tx_VimeoConnector_Controller_VideoController extends Tx_Extbase_MVC_Contro
 	protected $videoRepository;
 
 	/**
-	 * @var Tx_VimeoConnector_Domain_Repository_YearRepository $partialHelper
+	 * @var Tx_VimeoConnector_Domain_Repository_YearRepository
 	 */
 	protected $yearRepository;
 
