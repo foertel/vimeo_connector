@@ -69,9 +69,10 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 		$types = $typeRepository->findAllWithUid($types)->toArray();
 		
 		if ($showAll) {
-			$dummyType = $objectManager->get('Tx_VimeoConnector_Domain_Model_Type');
-			// @todo make localizable
-			$dummyType->setTitle('All Videos');
+			$dummyType = array(		
+				// @todo make localizable
+				'title' => 'All Videos'
+			);
 			array_unshift($types, $dummyType);
 		}
 
@@ -81,7 +82,7 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 				->statement(
 					'SELECT video.*'
 						. ' FROM tx_vimeoconnector_domain_model_video video'
-						. ($type->getUid() > 0 ? ' WHERE video.type = ' . intval($type->getUid()) : '')
+						. (is_object($type) && $type->getUid() > 0 ? ' WHERE video.type = ' . intval($type->getUid()) : '')
 						. (!empty($selectedVideos) ? ' AND video.uid NOT IN (' . implode(',', $selectedVideos) . ')' : '')
 						. ' ORDER BY video.date_taken DESC'
 						. ' LIMIT ' . intval($videosPerType)
@@ -93,6 +94,7 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 				'videos' => $result
 			);
 			
+			// store the uids of the selected videos to not select them in the next loop again
 			if($result->count() > 0) {
 				foreach($result as $video) {
 					if ($video instanceof Tx_VimeoConnector_Domain_Model_Video) {
