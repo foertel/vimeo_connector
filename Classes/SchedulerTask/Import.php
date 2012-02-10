@@ -67,6 +67,25 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
      */
     protected $tce;
 
+
+    /**
+     * number of newly added videos while running this task
+     * @var int
+     */
+    protected $inserted = 0;
+
+    /**
+     * number of updated videos while running this task
+     * @var int
+     */
+    protected $updated = 0;
+
+    /**
+     * number of deleted videos while running this task
+     * @var int
+     */
+    protected $deleted = 0;
+
 	/**
 	 * Function executed from the scheduler, to run the task
 	 *
@@ -89,6 +108,19 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
         } while($data->videos->total > 50 * $page++);
 
 		$this->processDeletes();
+
+        $message = t3lib_div::makeInstance(
+            't3lib_FlashMessage',
+            sprintf(
+                'vimeo_connector: %d new, %d updated, %d deleted videos.',
+                $this->inserted,
+                $this->updated,
+                $this->deleted
+            ),
+            '',
+            t3lib_FlashMessage::INFO
+        );
+        t3lib_FlashMessageQueue::addMessage($message);
 
 		return TRUE;
 	}
@@ -140,6 +172,7 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 					'tstamp' => time(),
 					'crdate' => strtotime($video->upload_date)
 				);
+                $this->updated++;
 
 				// insert new record
 			} else {
@@ -156,6 +189,8 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 					'thumbnail' => $thumbnailFileName,
 					'duration' => $video->duration
 				);
+
+                $this->inserted++;
 			}
 		}
 
@@ -178,6 +213,8 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 		foreach ($deletedVideos as $deletedVideo) {
 			$deleteRecords['tx_vimeoconnector_domain_model_video'][$deletedVideo['uid']]['delete'] = TRUE;
 		}
+
+        $this->deleted = count($deletedVideos);
 
 		if (!empty($deleteRecords)) {
 			$this->tce->start(array(), $deleteRecords);
