@@ -185,15 +185,23 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	 */
 	protected function processThumbnail($video) {
 		if (!empty($video->thumbnails->thumbnail)) {
+            // the last thumbnail is the highest resolution available
 			$thumbnail = end($video->thumbnails->thumbnail);
 
-			$thumbnailData = t3lib_div::getURL($thumbnail->_content);
-			$thumbnailPath = t3lib_div::getFileAbsFileName('uploads/tx_vimeoconnector');
-			preg_match('/\/([^\/]+)$/', $thumbnail->_content, $thumbnailUrlArray);
-			$thumbnailFileName = t3lib_div::makeInstance('t3lib_basicFileFunctions')
-				->getUniqueName(end($thumbnailUrlArray), $thumbnailPath);
-			$writingFileSucceeded = t3lib_div::writeFile($thumbnailFileName, $thumbnailData);
-			return ($writingFileSucceeded ? basename($thumbnailFileName) : NULL);
+            $thumbnailRawFileName = basename($thumbnail->_content);
+            $thumbnailFilePath = t3lib_div::getFileAbsFileName('uploads/tx_vimeoconnector/'. $thumbnailRawFileName);
+
+            if(!file_exists($thumbnailFilePath)) {
+                //if: file does not exist yet
+                $thumbnailData = t3lib_div::getURL($thumbnail->_content);
+                $writingFileSucceeded = t3lib_div::writeFile($thumbnailFilePath, $thumbnailData);
+
+                if(!$writingFileSucceeded) {
+                    return NULL;
+                }
+            }
+
+            return $thumbnailRawFileName;
 		}
 	}
 
