@@ -161,8 +161,13 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 			);
 
 				// update existing record with new data
-			if ($existingRecord && $existingRecord['tstamp'] < $video->modified_date) {
-				$thumbnailFileName = $this->processThumbnail($video);
+			if ($existingRecord) {
+
+                if(intval($existingRecord['tstamp']) >= strtotime($video->modified_date)) {
+                    continue;
+                }
+
+                $thumbnailFileName = $this->processThumbnail($video);
 
 				$databaseRecord['tx_vimeoconnector_domain_model_video'][intval($existingRecord['uid'])] = array(
 					'title' => $video->title,
