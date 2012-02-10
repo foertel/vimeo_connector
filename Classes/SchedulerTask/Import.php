@@ -157,7 +157,7 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 			$existingRecord = $GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow(
 				'uid, tstamp',
 				'tx_vimeoconnector_domain_model_video',
-				'identifier = ' . intval($video->id)
+				'identifier = ' . intval($video->id) . ' AND deleted = 0'
 			);
 
 				// update existing record with new data
