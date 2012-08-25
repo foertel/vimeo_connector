@@ -82,7 +82,8 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 				->statement(
 					'SELECT video.*'
 						. ' FROM tx_vimeoconnector_domain_model_video video'
-						. (is_object($type) && $type->getUid() > 0 ? ' WHERE video.type = ' . intval($type->getUid()) : '')
+						. ' WHERE video.deleted = 0 AND video.hidden = 0'
+						. (is_object($type) && $type->getUid() > 0 ? ' AND video.type = ' . intval($type->getUid()) : '')
 						. (!empty($selectedVideos) ? ' AND video.uid NOT IN (' . implode(',', $selectedVideos) . ')' : '')
 						. ' ORDER BY video.date_taken DESC'
 						. ' LIMIT ' . intval($videosPerType)
