@@ -62,6 +62,30 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	 */
 	protected $vimeoVideos = array();
 
+    /**
+     * @var t3lib_TCEmain
+     */
+    protected $tce;
+
+
+    /**
+     * number of newly added videos while running this task
+     * @var int
+     */
+    protected $inserted = 0;
+
+    /**
+     * number of updated videos while running this task
+     * @var int
+     */
+    protected $updated = 0;
+
+    /**
+     * number of deleted videos while running this task
+     * @var int
+     */
+    protected $deleted = 0;
+
 	/**
 	 * Function executed from the scheduler, to run the task
 	 *
@@ -70,22 +94,33 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	public function execute() {
 		$this->resolveExtensionConfiguration();
 
-			// get first page with videos
-		$data = $this->processJson($this->getJsonFromPage());
-		$this->processVideos($data->videos->video);
+        $this->tce = t3lib_div::makeInstance('t3lib_TCEmain');
 
-			/**
-			 * Vimeo only delivers 50 videos per page. So if there are
-			 * more pages to request, this will be handled here.
-			 */
-		if ($data->videos->total > 50) {
-			for($page = 2; $page <= ceil($data->videos->total / 50); $page++) {
-				$result = $this->processJson($this->getJsonFromPage($page));
-				$this->processVideos($result->videos->video);
-			}
-		}
+        $page = 1;
+        do {
+            $data = $this->processJson($this->getJsonFromPage($page));
+            $this->processVideos($data->videos->video);
+
+            /**
+             * Vimeo only delivers 50 videos per page. So if there are
+             * more pages to request, this will be handled here.
+             */
+        } while($data->videos->total > 50 * $page++);
 
 		$this->processDeletes();
+
+        $message = t3lib_div::makeInstance(
+            't3lib_FlashMessage',
+            sprintf(
+                'vimeo_connector: %d new, %d updated, %d deleted videos.',
+                $this->inserted,
+                $this->updated,
+                $this->deleted
+            ),
+            '',
+            t3lib_FlashMessage::INFO
+        );
+        t3lib_FlashMessageQueue::addMessage($message);
 
 		return TRUE;
 	}
@@ -96,6 +131,10 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	 */
 	protected function processJson($json) {
 		$data = json_decode($json);
+
+        if($data === NULL || !is_object($data)) {
+            throw new Exception('Vimeo returned an invalid response.', 1328884498);
+        }
 
 		if (is_object($data->err) && !empty($data->err->expl)) {
 			throw new Exception('API: ' . $data->err->expl, 1316116574);
@@ -111,19 +150,24 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	 * @return void
 	 */
 	protected function processVideos($videos) {
-		$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+
 		$databaseRecord = array();
 		foreach ((array)$videos as $video) {
 			$this->vimeoVideos[] = $video->id;
-			$existingRecord = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+			$existingRecord = $GLOBALS['TYPO3_DB']->exec_SELECTgetSingleRow(
 				'uid, tstamp',
 				'tx_vimeoconnector_domain_model_video',
-				'identifier = ' . intval($video->id)
+				'identifier = ' . intval($video->id) . ' AND deleted = 0'
 			);
 
 				// update existing record with new data
-			if (!empty($existingRecord[0]) && $existingRecord[0]['tstamp'] < $video->modified_date) {
-				$thumbnailFileName = $this->processThumbnail($video);
+			if ($existingRecord) {
+
+                if(intval($existingRecord['tstamp']) >= strtotime($video->modified_date)) {
+                    continue;
+                }
+
+                $thumbnailFileName = $this->processThumbnail($video);
 
 				$databaseRecord['tx_vimeoconnector_domain_model_video'][intval($existingRecord['uid'])] = array(
 					'title' => $video->title,
@@ -133,12 +177,13 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 					'tstamp' => time(),
 					'crdate' => strtotime($video->upload_date)
 				);
+                $this->updated++;
 
 				// insert new record
-			} elseif (empty($existingRecord)) {
+			} else {
 				$thumbnailFileName = $this->processThumbnail($video);
 
-				$databaseRecord['tx_vimeoconnector_domain_model_video']['NEW' . rand()] = array(
+				$databaseRecord['tx_vimeoconnector_domain_model_video']['NEW' . intval($video->id)] = array(
 					'identifier' => intval($video->id),
 					'pid' => intval($this->storagePid),
 					'tstamp' => time(),
@@ -149,12 +194,14 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 					'thumbnail' => $thumbnailFileName,
 					'duration' => $video->duration
 				);
+
+                $this->inserted++;
 			}
 		}
 
 		if (!empty($databaseRecord)) {
-			$tce->start($databaseRecord, array());
-			$tce->process_datamap();
+			$this->tce->start($databaseRecord, array());
+			$this->tce->process_datamap();
 		}
 	}
 
@@ -172,10 +219,11 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 			$deleteRecords['tx_vimeoconnector_domain_model_video'][$deletedVideo['uid']]['delete'] = TRUE;
 		}
 
+        $this->deleted = count($deletedVideos);
+
 		if (!empty($deleteRecords)) {
-			$tce = t3lib_div::makeInstance('t3lib_TCEmain');
-			$tce->start(array(), $deleteRecords);
-			$tce->process_cmdmap();
+			$this->tce->start(array(), $deleteRecords);
+			$this->tce->process_cmdmap();
 		}
 	}
 
@@ -185,15 +233,23 @@ class Tx_VimeoConnector_SchedulerTask_Import extends tx_scheduler_Task {
 	 */
 	protected function processThumbnail($video) {
 		if (!empty($video->thumbnails->thumbnail)) {
+            // the last thumbnail is the highest resolution available
 			$thumbnail = end($video->thumbnails->thumbnail);
 
-			$thumbnailData = t3lib_div::getURL($thumbnail->_content);
-			$thumbnailPath = t3lib_div::getFileAbsFileName('uploads/tx_vimeoconnector');
-			preg_match('/\/([^\/]+)$/', $thumbnail->_content, $thumbnailUrlArray);
-			$thumbnailFileName = t3lib_div::makeInstance('t3lib_basicFileFunctions')
-				->getUniqueName(end($thumbnailUrlArray), $thumbnailPath);
-			$writingFileSucceeded = t3lib_div::writeFile($thumbnailFileName, $thumbnailData);
-			return ($writingFileSucceeded ? basename($thumbnailFileName) : NULL);
+            $thumbnailRawFileName = basename($thumbnail->_content);
+            $thumbnailFilePath = t3lib_div::getFileAbsFileName('uploads/tx_vimeoconnector/'. $thumbnailRawFileName);
+
+            if(!file_exists($thumbnailFilePath)) {
+                //if: file does not exist yet
+                $thumbnailData = t3lib_div::getURL($thumbnail->_content);
+                $writingFileSucceeded = t3lib_div::writeFile($thumbnailFilePath, $thumbnailData);
+
+                if(!$writingFileSucceeded) {
+                    return NULL;
+                }
+            }
+
+            return $thumbnailRawFileName;
 		}
 	}
 

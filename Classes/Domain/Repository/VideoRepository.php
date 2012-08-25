@@ -51,16 +51,29 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 
 	/**
 	 * @param array<int> $types
-	 * @return array
+	 * @param boolean $showAll show videos without type?
+	 * @param integer $videosPerType max videos per type
+	 * @return array 
 	 */
-	public function findForTeaserBox($types, $showAll) {
-		$videos = array();
+	public function findForTeaserBox($types, $showAll = false, $videosPerType = 1) {
 		$selectedVideos = array();
 
-		$types = t3lib_div::intExplode(',', $types);
-
+		/**
+		 * an array of arrays with the keys 'type' and 'videos' 
+		 * @var array
+		 */
+		$return = array();
+		
+		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$typeRepository = $objectManager->get('Tx_VimeoConnector_Domain_Repository_TypeRepository');
+		$types = $typeRepository->findAllWithUid($types)->toArray();
+		
 		if ($showAll) {
-			array_unshift($types, 0);
+			$dummyType = array(		
+				// @todo make localizable
+				'title' => 'All Videos'
+			);
+			array_unshift($types, $dummyType);
 		}
 
 		foreach ($types as $type) {
@@ -68,34 +81,31 @@ class Tx_VimeoConnector_Domain_Repository_VideoRepository extends Tx_Extbase_Per
 				->createQuery()
 				->statement(
 					'SELECT video.*'
-						. ' FROM tx_vimeoconnector_domain_model_video video,'
-							. ' tx_vimeoconnector_domain_model_type type'
-						. ($type > 0 ? ' WHERE video.type = ' . intval($type) : '')
+						. ' FROM tx_vimeoconnector_domain_model_video video'
+						. ' WHERE video.deleted = 0 AND video.hidden = 0'
+						. (is_object($type) && $type->getUid() > 0 ? ' AND video.type = ' . intval($type->getUid()) : '')
 						. (!empty($selectedVideos) ? ' AND video.uid NOT IN (' . implode(',', $selectedVideos) . ')' : '')
 						. ' ORDER BY video.date_taken DESC'
-						. ' LIMIT 1'
+						. ' LIMIT ' . intval($videosPerType)
 				)
-				->execute();
-
-			$video = $result->getFirst();
-			if ($video instanceof Tx_VimeoConnector_Domain_Model_Video) {
-					/**
-					 * this fakes a type with title 'All Videos' to be used as tab in the teaserBox
-					 *
-					 * @todo make localizable
-					 */
-				if ($type === 0) {
-					$video->setType(
-						array('title' => 'All Videos')
-					);
+				->execute()
+			;
+			$return[] = array(
+				'type' => $type,
+				'videos' => $result
+			);
+			
+			// store the uids of the selected videos to not select them in the next loop again
+			if($result->count() > 0) {
+				foreach($result as $video) {
+					if ($video instanceof Tx_VimeoConnector_Domain_Model_Video) {
+						$selectedVideos[] = $video->getUid();
+					}
 				}
-
-				$videos[] = $video;
-				$selectedVideos[] = $video->getUid();
 			}
+			
 		}
-
-		return $videos;
+		return $return;
 	}
 }
 ?>

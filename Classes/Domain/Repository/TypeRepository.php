@@ -22,29 +22,29 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 /**
- * @author Felix Oertel <f@oer.tel>
+ * @author Christian Zenker <christian.zenker@599media.de>
  * @package vimeo_connector
  * @subpackage Repository
  */
-class Tx_VimeoConnector_Domain_Repository_YearRepository {
+class Tx_VimeoConnector_Domain_Repository_TypeRepository extends Tx_Extbase_Persistence_Repository { 
 
 	/**
-	 * @return array<array>
+	 * find all types with the given uids
+	 * 
+	 * @param array|string $uids
 	 */
-	public function findAll() {
-		$sqlResult = $GLOBALS['TYPO3_DB']->sql_query(
-			'SELECT FROM_UNIXTIME(date_taken, \'%Y\') as year, FROM_UNIXTIME(date_taken, \'%c\') as month, COUNT(*) as count'
-			. ' FROM tx_vimeoconnector_domain_model_video'
-			. ' WHERE tx_vimeoconnector_domain_model_video.deleted = 0 AND tx_vimeoconnector_domain_model_video.hidden = 0'
-			. ' GROUP BY YEAR(FROM_UNIXTIME(date_taken, \'%Y-%m-%d\')), MONTH(FROM_UNIXTIME(date_taken, \'%Y-%m-%d\'))'
-			. ' ORDER BY year DESC, month'
-		);
-
-		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($sqlResult)) {
-			$years[$row['year']][$row['month']] = $row['count'];
+	public function findAllWithUid($uids) {
+		if(is_string($uids)) {
+			$uids = t3lib_div::intExplode(',', $uids, true);
 		}
-
-		return $years;
+		
+		$query = $this->createQuery();
+		$query->matching(
+			$query->in('uid', $uids)
+		);
+		
+		return $query->execute();
+		
 	}
 }
 ?>

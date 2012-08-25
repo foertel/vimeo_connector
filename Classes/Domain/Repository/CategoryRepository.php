@@ -27,5 +27,12 @@
  * @subpackage Repository
  */
 class Tx_VimeoConnector_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
+	
+	public function __construct(Tx_Extbase_Object_ObjectManagerInterface $objectManager = NULL) {
+		parent::__construct($objectManager);
+		$this->setDefaultOrderings(array(
+			'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
+		));
+	}
 }
 ?>
